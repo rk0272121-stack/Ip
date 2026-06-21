@@ -1,21 +1,20 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import requests
-import json
 import socket
 import re
 from datetime import datetime
 
 app = Flask(__name__)
+CORS(app)  # Sabhi domains ko allow karo
 
 def get_ip_info(ip):
     result = {
         "ip": ip,
         "timestamp": datetime.now().isoformat(),
-        "location": {},
-        "sources": {}
+        "location": {}
     }
     
-    # ip-api.com
     try:
         url = f"http://ip-api.com/json/{ip}?fields=status,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,query"
         r = requests.get(url, timeout=3)
